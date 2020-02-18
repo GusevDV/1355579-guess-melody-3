@@ -1,4 +1,3 @@
-const AVATAR_URL = `https://api.adorable.io/avatars/128`;
 
 export default [
   {
@@ -24,13 +23,13 @@ export default [
       src: `https://store.vas-stream.ru/uploads/mts-rbt/cms/preview/file/15336/319fce3a4c1668930a0b24a2ceac7fa2.optimized.mp3`,
     },
     answers: [{
-      picture: `https://store.vas-stream.ru/uploads/mts-rbt/cms/image/file/3483/optimized_default.jpg`,
+      picture: `https://igapi.megafon.ru/static/thumbs/singers/Loboda/244x244`,
       artist: `Loboda`,
     }, {
-      picture: `${AVATAR_URL}/${Math.random()}`,
+      picture: `https://igapi.megafon.ru/static/thumbs/singers/Zivert/244x244`,
       artist: `Zivert`,
     }, {
-      picture: `${AVATAR_URL}/${Math.random()}`,
+      picture: `https://store.vas-stream.ru/uploads/mts-rbt/cms/image/file/7906/optimized_default.jpg`,
       artist: `KAZKA`,
     }],
   }
