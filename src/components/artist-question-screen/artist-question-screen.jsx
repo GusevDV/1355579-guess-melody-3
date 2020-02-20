@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {artistQuestionType} from '../../types/questions-types';
 
 const ArtistQuestionScreen = (props) => {
-  const {onAnswer, question, question: {answers, song}} = props;
+  const {onAnswer, question} = props;
+  const {answers, song} = props.question;
 
-  const handleInputAnswerChange = (answer) => {
-    onAnswer(question, answer);
-  };
   const renderAnswer = (answer, i) => {
     return (
       <div key={answer.artist} className="artist">
@@ -16,7 +15,7 @@ const ArtistQuestionScreen = (props) => {
           name="answer"
           value={`artist-${i}`}
           id={`answer-${i}`}
-          onChange={() => handleInputAnswerChange(answer)}
+          onChange={() => onAnswer(question, answer)}
         />
         <label className="artist__name" htmlFor={`answer-${i}`}>
           <img className="artist__picture" src={answer.picture} alt={answer.artist} />
@@ -66,17 +65,7 @@ const ArtistQuestionScreen = (props) => {
 
 ArtistQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.shape({
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      picture: PropTypes.string.isRequired,
-    })).isRequired,
-    song: PropTypes.shape({
-      artist: PropTypes.string.isRequired,
-      src: PropTypes.string.isRequired,
-    }).isRequired,
-    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
-  }).isRequired,
+  question: artistQuestionType
 };
 
 export default ArtistQuestionScreen;

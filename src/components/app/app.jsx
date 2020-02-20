@@ -39,10 +39,6 @@ class App extends React.PureComponent {
       );
     }
 
-    if (!question) {
-      return null;
-    }
-
     switch (question.type) {
       case `artist`:
         return (
@@ -58,9 +54,9 @@ class App extends React.PureComponent {
             onAnswer={this.handleAnswerChange}
           />
         );
+      default:
+        return null;
     }
-
-    return null;
 
   }
 

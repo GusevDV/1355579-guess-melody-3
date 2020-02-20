@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {genreQuestionType} from '../../types/questions-types';
 
 class GenreQuestionScreen extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      answers: [false, false, false, false],
+      answers: props.question.answers.map(() => false),
     };
 
     this.handleInputAnswerChange = this.handleInputAnswerChange.bind(this);
@@ -14,11 +15,9 @@ class GenreQuestionScreen extends React.PureComponent {
   }
 
   handleInputAnswerChange(e, i) {
-    const value = e.target.checked;
-    const {answers: userAnswers} = this.state;
-    this.setState({
-      answers: [...userAnswers.slice(0, i), value, ...userAnswers.slice(i + 1)],
-    });
+    let userAnswers = [...this.state.answers];
+    userAnswers[i] = e.target.checked;
+    this.setState({answers: userAnswers});
   }
 
   handleFormAnswerSubmit(e) {
@@ -26,7 +25,7 @@ class GenreQuestionScreen extends React.PureComponent {
     this.props.onAnswer(this.props.question, this.state.answers);
   }
 
-  _renderAnswer(answer, i) {
+  renderAnswer(answer, i) {
     return (
       <div key={answer.genre} className="track">
         <button className="track__button track__button--play" type="button"></button>
@@ -49,7 +48,7 @@ class GenreQuestionScreen extends React.PureComponent {
     );
   }
   render() {
-    const {question: {genre, answers}} = this.props;
+    const {genre, answers} = this.props.question;
 
     return (
       <section className="game game--genre">
@@ -74,7 +73,7 @@ class GenreQuestionScreen extends React.PureComponent {
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
           <form className="game__tracks" onSubmit={(e) => this.handleFormAnswerSubmit(e)}>
-            {answers.map((answer, i) => this._renderAnswer(answer, i))}
+            {answers.map((answer, i) => this.renderAnswer(answer, i))}
             <button className="game__submit button" type="submit">Ответить</button>
           </form>
         </section>
@@ -85,14 +84,7 @@ class GenreQuestionScreen extends React.PureComponent {
 
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.shape({
-    answers: PropTypes.arrayOf(PropTypes.shape({
-      src: PropTypes.string.isRequired,
-      genre: PropTypes.string.isRequired,
-    })).isRequired,
-    genre: PropTypes.string.isRequired,
-    type: PropTypes.oneOf([`artist`, `genre`]).isRequired,
-  }).isRequired,
+  question: genreQuestionType
 };
 
 export default GenreQuestionScreen;
