@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export const artistQustionType = PropTypes.shape({
+export const artistQuestionType = PropTypes.shape({
   answers: PropTypes.arrayOf(PropTypes.shape({
     artist: PropTypes.string.isRequired,
     picture: PropTypes.string.isRequired,
