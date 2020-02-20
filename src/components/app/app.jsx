@@ -12,14 +12,20 @@ class App extends React.PureComponent {
     this.state = {
       step: -1,
     };
-    this._handleWelcomeButtonClick = this._handleWelcomeButtonClick.bind(this);
+    this.handleWelcomeButtonClick = this.handleWelcomeButtonClick.bind(this);
+    this.handleAnswerChange = this.handleAnswerChange.bind(this);
   }
-  _handleWelcomeButtonClick() {
+  handleWelcomeButtonClick() {
     this.setState({
       step: 0,
     });
   }
-  _renderGameScreen() {
+  handleAnswerChange() {
+    this.setState((prevState) => ({
+      step: prevState.step + 1,
+    }));
+  }
+  renderGameScreen() {
     const {errorsCount, questions} = this.props;
     const {step} = this.state;
     const question = questions[step];
@@ -28,39 +34,34 @@ class App extends React.PureComponent {
       return (
         <WelcomeScreen
           errorsCount={errorsCount}
-          onWelcomeButtonClick={this._handleWelcomeButtonClick}
+          onWelcomeButtonClick={this.handleWelcomeButtonClick}
         />
       );
     }
 
-    if (question) {
-      switch (question.type) {
-        case `artist`:
-          return (
-            <ArtistQuestionScreen
-              question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
-            />
-          );
-        case `genre`:
-          return (
-            <GenreQuestionScreen
-              question={question}
-              onAnswer={() => {
-                this.setState((prevState) => ({
-                  step: prevState.step + 1,
-                }));
-              }}
-            />
-          );
-      }
+    if (!question) {
+      return null;
+    }
+
+    switch (question.type) {
+      case `artist`:
+        return (
+          <ArtistQuestionScreen
+            question={question}
+            onAnswer={this.handleAnswerChange}
+          />
+        );
+      case `genre`:
+        return (
+          <GenreQuestionScreen
+            question={question}
+            onAnswer={this.handleAnswerChange}
+          />
+        );
     }
 
     return null;
+
   }
 
   render() {
@@ -70,7 +71,7 @@ class App extends React.PureComponent {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {this._renderGameScreen()}
+            {this.renderGameScreen()}
           </Route>
           <Route exact path="/artist">
             <ArtistQuestionScreen

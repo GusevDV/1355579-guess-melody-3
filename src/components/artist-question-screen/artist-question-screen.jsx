@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 const ArtistQuestionScreen = (props) => {
   const {onAnswer, question, question: {answers, song}} = props;
 
-  const handleInputAnswerChange = (e, answer) => {
-    e.preventDefault();
+  const handleInputAnswerChange = (answer) => {
     onAnswer(question, answer);
   };
   const renderAnswer = (answer, i) => {
@@ -17,7 +16,7 @@ const ArtistQuestionScreen = (props) => {
           name="answer"
           value={`artist-${i}`}
           id={`answer-${i}`}
-          onChange={(e) => handleInputAnswerChange(e, answer)}
+          onChange={() => handleInputAnswerChange(answer)}
         />
         <label className="artist__name" htmlFor={`answer-${i}`}>
           <img className="artist__picture" src={answer.picture} alt={answer.artist} />

@@ -9,11 +9,11 @@ class GenreQuestionScreen extends React.PureComponent {
       answers: [false, false, false, false],
     };
 
-    this._handleInputAnswerChange = this._handleInputAnswerChange.bind(this);
-    this._handleFormAnswerSubmit = this._handleFormAnswerSubmit.bind(this);
+    this.handleInputAnswerChange = this.handleInputAnswerChange.bind(this);
+    this.handleFormAnswerSubmit = this.handleFormAnswerSubmit.bind(this);
   }
 
-  _handleInputAnswerChange(e, i) {
+  handleInputAnswerChange(e, i) {
     const value = e.target.checked;
     const {answers: userAnswers} = this.state;
     this.setState({
@@ -21,7 +21,7 @@ class GenreQuestionScreen extends React.PureComponent {
     });
   }
 
-  _handleFormAnswerSubmit(e) {
+  handleFormAnswerSubmit(e) {
     e.preventDefault();
     this.props.onAnswer(this.props.question, this.state.answers);
   }
@@ -41,7 +41,7 @@ class GenreQuestionScreen extends React.PureComponent {
             value={`answer-${i}`}
             id={`answer-${i}`}
             checked={this.state.answers[i]}
-            onChange={(e) => this._handleInputAnswerChange(e, i)}
+            onChange={(e) => this.handleInputAnswerChange(e, i)}
           />
           <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
         </div>
@@ -73,7 +73,7 @@ class GenreQuestionScreen extends React.PureComponent {
 
         <section className="game__screen">
           <h2 className="game__title">Выберите {genre} треки</h2>
-          <form className="game__tracks" onSubmit={(e) => this._handleFormAnswerSubmit(e)}>
+          <form className="game__tracks" onSubmit={(e) => this.handleFormAnswerSubmit(e)}>
             {answers.map((answer, i) => this._renderAnswer(answer, i))}
             <button className="game__submit button" type="submit">Ответить</button>
           </form>
