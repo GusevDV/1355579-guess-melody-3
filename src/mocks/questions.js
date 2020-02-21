@@ -1,8 +1,5 @@
-import React from "react";
-import renderer from "react-test-renderer";
-import App from "./app.jsx";
 
-const Questions = [
+export default [
   {
     type: `genre`,
     genre: `jazz`,
@@ -37,14 +34,3 @@ const Questions = [
     }],
   }
 ];
-
-it(`Should App component render correctly`, () => {
-  const tree = renderer
-    .create(<App
-      errorsCount={3}
-      questions={Questions}
-    />)
-    .toJSON();
-
-  expect(tree).toMatchSnapshot();
-});
