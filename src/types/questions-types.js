@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import {gameType} from './games-types.js';
 
 export const artistQuestionType = PropTypes.shape({
   answers: PropTypes.arrayOf(PropTypes.shape({
@@ -9,7 +10,7 @@ export const artistQuestionType = PropTypes.shape({
     artist: PropTypes.string.isRequired,
     src: PropTypes.string.isRequired,
   }).isRequired,
-  type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
+  type: gameType
 }).isRequired;
 
 
@@ -19,5 +20,5 @@ export const genreQuestionType = PropTypes.shape({
     genre: PropTypes.string.isRequired,
   })).isRequired,
   genre: PropTypes.string.isRequired,
-  type: PropTypes.oneOf([`artist`, `genre`]).isRequired,
+  type: gameType
 }).isRequired;

@@ -1,9 +1,14 @@
 import React from "react";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import GameScreen from "../game-screen/game-screen.jsx";
 import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
+import withAudioplayer from "../../hocs/with-audioplayer/with-audioplayer.js";
 import PropTypes from 'prop-types';
+
+const GenreQuestionScreenWrapped = withAudioplayer(GenreQuestionScreen);
+const ArtistQuestionScreenWrapped = withAudioplayer(ArtistQuestionScreen);
 
 class App extends React.PureComponent {
   constructor(props) {
@@ -42,17 +47,21 @@ class App extends React.PureComponent {
     switch (question.type) {
       case `artist`:
         return (
-          <ArtistQuestionScreen
-            question={question}
-            onAnswer={this.handleAnswerChange}
-          />
+          <GameScreen type={question.type}>
+            <ArtistQuestionScreenWrapped
+              question={question}
+              onAnswer={this.handleAnswerChange}
+            />
+          </GameScreen>
         );
       case `genre`:
         return (
-          <GenreQuestionScreen
-            question={question}
-            onAnswer={this.handleAnswerChange}
-          />
+          <GameScreen type={question.type}>
+            <GenreQuestionScreenWrapped
+              question={question}
+              onAnswer={this.handleAnswerChange}
+            />
+          </GameScreen>
         );
       default:
         return null;
@@ -70,13 +79,13 @@ class App extends React.PureComponent {
             {this.renderGameScreen()}
           </Route>
           <Route exact path="/artist">
-            <ArtistQuestionScreen
+            <ArtistQuestionScreenWrapped
               question={questions[1]}
               onAnswer={() => {}}
             />
           </Route>
           <Route exact path="/genre">
-            <GenreQuestionScreen
+            <GenreQuestionScreenWrapped
               question={questions[0]}
               onAnswer={() => {}}
             />
