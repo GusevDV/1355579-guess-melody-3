@@ -1,8 +1,4 @@
 import PropTypes from 'prop-types';
-
-export const QuestionType = {
-  ARTIST: `artist`,
-  GENRE: `genre`,
-};
+import {QuestionType} from '../../const.js';
 
 export const gameType = PropTypes.oneOf([QuestionType.ARTIST, QuestionType.GENRE]).isRequired;
