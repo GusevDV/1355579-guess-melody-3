@@ -74,10 +74,10 @@ it(`Click on play button should change state correctly`, () => {
 
   trackButtonOne.simulate(`click`);
 
-  expect(screen.state().isPlaying).toBeTruthy();
+  expect(screen.state().isActive).toBeTruthy();
 
   trackButtonOne.simulate(`click`);
 
-  expect(screen.state().isPlaying).toBeFalsy();
+  expect(screen.state().isActive).toBeFalsy();
 
 });
