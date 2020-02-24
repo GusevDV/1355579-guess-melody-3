@@ -13,8 +13,7 @@ const withAudioplayer = (Component) => {
     handlePlayPauseButtonClick(id) {
       const {activePlayerId} = this.state;
       this.setState({
-        activePlayerId: activePlayerId === id ? -1 : id,
-        isFirstPlay: false
+        activePlayerId: activePlayerId === id ? -1 : id
       });
     }
 
