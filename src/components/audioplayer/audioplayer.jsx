@@ -64,7 +64,7 @@ class Audioplayer extends React.PureComponent {
     return (
       <>
         <button
-          className={`track__button track__button--${this.props.isPlaying ? `pause` : `play`}`}
+          className={`track__button track__button--${this.state.isPlaying ? `pause` : `play`}`}
           type="button"
           disabled={this.isLoading}
           onClick={this.handlePlayPauseButtonClick}
