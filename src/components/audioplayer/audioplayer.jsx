@@ -8,7 +8,7 @@ class Audioplayer extends React.PureComponent {
     this.state = {
       progress: 0,
       isLoading: true,
-      isActive: this.props.isPlaying
+      isPlaying: false
     };
 
     this.audioRef = createRef();
@@ -24,26 +24,29 @@ class Audioplayer extends React.PureComponent {
 
     audio.onplay = () => {
       this.setState({
-        isActive: true,
+        isPlaying: true,
       });
     };
 
     audio.onpause = () => this.setState({
-      isActive: false,
+      isPlaying: false,
     });
 
     audio.ontimeupdate = () => this.setState({
-      progress: audio.currentTime
+      progress: Math.floor(audio.currentTime)
     });
+
+    if (this.props.autoplay) {
+      audio.play();
+    }
 
   }
   componentDidUpdate() {
     const audio = this.audioRef.current;
-    if (this.props.isPlaying) {
-      audio.play();
-    } else {
+    if (!this.props.isActive) {
       audio.pause();
     }
+
   }
   componentWillUnmount() {
     const audio = this.audioRef.current;
@@ -55,16 +58,24 @@ class Audioplayer extends React.PureComponent {
     audio.src = ``;
   }
   handlePlayPauseButtonClick() {
-    this.setState((prevState) => ({
-      isActive: !prevState.isActive
-    }));
-    this.props.onPlayPauseButtonClick();
+    const audio = this.audioRef.current;
+
+    if (!this.props.isActive) {
+      this.props.onActivate();
+    }
+
+    if (this.state.isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+    }
+
   }
   render() {
     return (
       <>
         <button
-          className={`track__button track__button--${this.state.isActive ? `pause` : `play`}`}
+          className={`track__button track__button--${this.state.isPlaying ? `pause` : `play`}`}
           type="button"
           disabled={this.isLoading}
           onClick={this.handlePlayPauseButtonClick}
@@ -80,8 +91,8 @@ class Audioplayer extends React.PureComponent {
 }
 
 Audioplayer.propTypes = {
-  onPlayPauseButtonClick: PropTypes.func.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
+  onActivate: PropTypes.func.isRequired,
+  isActive: PropTypes.bool.isRequired,
   autoplay: PropTypes.bool,
   audioSrc: PropTypes.string.isRequired,
 };

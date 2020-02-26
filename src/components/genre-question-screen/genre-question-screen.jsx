@@ -28,7 +28,7 @@ class GenreQuestionScreen extends React.PureComponent {
   renderAnswer(answer, i) {
     return (
       <div key={answer.genre} className="track">
-        {this.props.renderPlayer(answer.src, i)}
+        {this.props.renderPlayer(answer.src, i, i === 0 && true)}
         <div className="game__answer">
           <input
             className="game__input visually-hidden"
