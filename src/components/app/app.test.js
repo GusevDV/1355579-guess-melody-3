@@ -1,10 +1,11 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import App from "./app.jsx";
+import {QuestionTypes} from '../../../const.js';
 
 const Questions = [
   {
-    type: `genre`,
+    type: QuestionTypes.GENRE,
     genre: `jazz`,
     answers: [{
       src: `https://store.vas-stream.ru/uploads/mts-rbt/cms/preview/file/27313/cf1cae78ccb896cd22790f4c2a649ab2.mp3?timestamp=1580999601`,
@@ -20,7 +21,7 @@ const Questions = [
       genre: `rock`,
     }],
   }, {
-    type: `artist`,
+    type: QuestionTypes.ARTIST,
     song: {
       artist: `Loboda`,
       src: `https://store.vas-stream.ru/uploads/mts-rbt/cms/preview/file/15336/319fce3a4c1668930a0b24a2ceac7fa2.optimized.mp3`,

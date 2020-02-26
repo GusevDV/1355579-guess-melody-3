@@ -5,6 +5,7 @@ import WelcomeScreen from "../welcome-screen/welcome-screen.jsx";
 import ArtistQuestionScreen from '../artist-question-screen/artist-question-screen.jsx';
 import GenreQuestionScreen from '../genre-question-screen/genre-question-screen.jsx';
 import withAudioplayer from "../../hocs/with-audioplayer/with-audioplayer.js";
+import {QuestionTypes} from '../../../const.js';
 import PropTypes from 'prop-types';
 
 const GenreQuestionScreenWrapped = withAudioplayer(GenreQuestionScreen);
@@ -45,7 +46,7 @@ class App extends React.PureComponent {
     }
 
     switch (question.type) {
-      case `artist`:
+      case QuestionTypes.ARTIST:
         return (
           <GameScreen type={question.type}>
             <ArtistQuestionScreenWrapped
@@ -54,7 +55,7 @@ class App extends React.PureComponent {
             />
           </GameScreen>
         );
-      case `genre`:
+      case QuestionTypes.GENRE:
         return (
           <GameScreen type={question.type}>
             <GenreQuestionScreenWrapped

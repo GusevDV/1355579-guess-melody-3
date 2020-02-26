@@ -2,12 +2,13 @@ import React from "react";
 import {configure, shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GenreQuestionScreen from "./genre-question-screen.jsx";
+import {QuestionTypes} from '../../../const.js';
 
 configure({adapter: new Adapter()});
 
 const mock = {
   question: {
-    type: `genre`,
+    type: QuestionTypes.GENRE,
     genre: `rock`,
     answers: [
       {
