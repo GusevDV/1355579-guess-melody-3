@@ -1,9 +1,10 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import GenreQuestionScreen from './genre-question-screen.jsx';
+import {QuestionTypes} from '../../../const.js';
 
 const question = {
-  type: `genre`,
+  type: QuestionTypes.GENRE,
   genre: `jazz`,
   answers: [{
     src: `https://store.vas-stream.ru/uploads/mts-rbt/cms/preview/file/27313/cf1cae78ccb896cd22790f4c2a649ab2.mp3?timestamp=1580999601`,
@@ -25,6 +26,7 @@ it(`GenreQuestionScreen is rendered correctly`, () => {
     <GenreQuestionScreen
       question={question}
       onAnswer={() => {}}
+      renderPlayer={() => {}}
     />
   ), {
     createNodeMock: () => {
