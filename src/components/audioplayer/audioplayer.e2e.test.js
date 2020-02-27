@@ -13,11 +13,30 @@ const mock = {
   }
 };
 
-it(`onPlayPauseButtonClick should be called`, () => {
-
+beforeEach(() => {
   jest
   .spyOn(window.HTMLMediaElement.prototype, `play`)
-  .mockImplementation(() => {});
+  .mockImplementation(function () {
+    // eslint-disable-next-line no-invalid-this
+    if (this.onplay) {
+      // eslint-disable-next-line no-invalid-this
+      this.onplay();
+    }
+  });
+
+  jest
+    .spyOn(window.HTMLMediaElement.prototype, `pause`)
+    .mockImplementation(function () {
+      // eslint-disable-next-line no-invalid-this
+      if (this.onpause) {
+        // eslint-disable-next-line no-invalid-this
+        this.onpause();
+      }
+    });
+
+});
+
+it(`onPlayPauseButtonClick should be called`, () => {
 
   const onActivate = jest.fn();
 
@@ -28,17 +47,13 @@ it(`onPlayPauseButtonClick should be called`, () => {
     audioSrc={mock.song.src}
   />);
 
-  const trackButton = screen.find(`button.track__button`).at(0);
-
+  const trackButton = screen.find(`button.track__button`).first();
+  screen.setState({isLoading: false});
   trackButton.simulate(`click`);
   expect(onActivate).toHaveBeenCalledTimes(1);
 });
 
 it(`onPlayPauseButtonClick don't should be called`, () => {
-
-  jest
-  .spyOn(window.HTMLMediaElement.prototype, `play`)
-  .mockImplementation(() => {});
 
   const onActivate = jest.fn();
 
@@ -49,7 +64,8 @@ it(`onPlayPauseButtonClick don't should be called`, () => {
     audioSrc={mock.song.src}
   />);
 
-  const trackButton = screen.find(`button.track__button`).at(0);
+  screen.setState({isLoading: false});
+  const trackButton = screen.find(`button.track__button`).first();
 
   trackButton.simulate(`click`);
   expect(onActivate).toHaveBeenCalledTimes(0);
@@ -57,14 +73,6 @@ it(`onPlayPauseButtonClick don't should be called`, () => {
 
 it(`Click on play button should work correctly`, () => {
 
-  jest
-  .spyOn(window.HTMLMediaElement.prototype, `pause`)
-  .mockImplementation(() => {});
-
-  jest
-  .spyOn(window.HTMLMediaElement.prototype, `play`)
-  .mockImplementation(() => {});
-
   const onActivate = jest.fn();
 
   const screen = mount(<Audioplayer
@@ -74,18 +82,20 @@ it(`Click on play button should work correctly`, () => {
     audioSrc={mock.song.src}
   />);
 
-  const trackButton = screen.find(`button.track__button`).at(0);
+  screen.setState({isLoading: false});
+  const trackButton = screen.find(`button.track__button`).first();
 
 
   trackButton.simulate(`click`);
-  expect(screen.find(`button.track__button`).at(0).hasClass(`track__button--pause`)).toBeTruthy();
+  expect(screen.find(`button.track__button`).first().hasClass(`track__button--pause`)).toBeTruthy();
 
   trackButton.simulate(`click`);
-  expect(screen.find(`button.track__button`).at(0).hasClass(`track__button--play`)).toBeTruthy();
+  expect(screen.find(`button.track__button`).first().hasClass(`track__button--play`)).toBeTruthy();
 
 });
 
 it(`Click on play button should change state correctly`, () => {
+
   const onPlayPauseButtonClick = jest.fn();
 
   const screen = mount(<Audioplayer
@@ -95,8 +105,10 @@ it(`Click on play button should change state correctly`, () => {
     audioSrc={mock.song.src}
   />);
 
+  screen.setState({isLoading: false});
+
   const trackButtons = screen.find(`button.track__button`);
-  const trackButtonOne = trackButtons.at(0);
+  const trackButtonOne = trackButtons.first();
 
   trackButtonOne.simulate(`click`);
 

@@ -4,6 +4,7 @@ exports[`Audioplayer is rendered correctly 1`] = `
 Array [
   <button
     className="track__button track__button--play"
+    disabled={true}
     onClick={[Function]}
     type="button"
   />,

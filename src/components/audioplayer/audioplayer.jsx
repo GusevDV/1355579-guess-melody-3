@@ -43,7 +43,7 @@ class Audioplayer extends React.PureComponent {
   }
   componentDidUpdate() {
     const audio = this.audioRef.current;
-    if (!this.props.isActive) {
+    if (!this.props.isActive && this.state.isPlaying) {
       audio.pause();
     }
 
@@ -77,7 +77,7 @@ class Audioplayer extends React.PureComponent {
         <button
           className={`track__button track__button--${this.state.isPlaying ? `pause` : `play`}`}
           type="button"
-          disabled={this.isLoading}
+          disabled={this.state.isLoading}
           onClick={this.handlePlayPauseButtonClick}
         />
         <div className="track__status">
